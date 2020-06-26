@@ -56,7 +56,7 @@ combinations' 0 _ = [[]]
 combinations' n xs = [xs !! (i-1) : x' | i <- [1..length xs]
                                     , x' <- combinations' (n-1) . drop i $ xs]
 
--- Algorithm :
+-- Ex. 27. Algorithm :
 -- 1. Generate all the combinations using the first elements of the list of integer (using question 26)
 -- 2. For each combination:
 --    a. remove this possibility of the list
@@ -71,3 +71,14 @@ groupSubsets ns xs = concatMap groupSubsets' root -- Step 3
     root = combinations' (head ns) xs -- Step 1.
     groupSubsets' x = map (x:) others -- Step 2.c
       where others = groupSubsets (tail ns) (xs \\ x) -- Step 2.a and 2.b
+
+-- Ex. 28 : sort by length, then by frequency
+lsort :: [[a]] -> [[a]]
+lsort = sortBy (\x y -> compare (length x) (length y))
+
+-- To sort by frequence, we need to sort by length, then group by length
+-- And sorty by this new length (so lsort can be used again)
+-- Concat everything to return to a list of list
+lfsort :: [[a]] -> [[a]]
+lfsort xs = concat . lsort . lgroup . lsort $ xs
+  where lgroup = groupBy (\x y -> (length x) == (length y))
