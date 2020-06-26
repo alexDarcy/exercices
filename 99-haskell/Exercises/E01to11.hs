@@ -7,7 +7,6 @@ myLast (x:[]) = x
 myLast (_:xs) = myLast xs
 
 -- Ex. 2: Last but one element of a list
--- TODO: quickcheck
 myButLast :: [a] -> a
 myButLast [] = error "Empty list"
 myButLast (x:[]) = error "List with one element"
@@ -15,7 +14,6 @@ myButLast (x:y:[]) = x
 myButLast (_:xs) = myButLast xs
 
 -- Ex. 3: k-th element of a list
--- TODO: quickcheck
 elementAt :: [a] -> Int -> a
 elementAt [] k = error "Empty list"
 elementAt (x:xs) k
@@ -26,13 +24,11 @@ elementAt (x:xs) k
 
 
 -- Ex. 4: length of a list
--- TODO: quickcheck
 myLength :: [a] -> Int
 myLength [] = 0
 myLength (_:xs) =  1 + myLength xs
 
 -- Ex. 5: reverse a list
--- TODO: quickcheck
 myReverse :: [a] -> [a]
 myReverse [] = []
 myReverse (x:xs) =  myReverse xs ++ [x]
