@@ -56,3 +56,18 @@ combinations' 0 _ = [[]]
 combinations' n xs = [xs !! (i-1) : x' | i <- [1..length xs]
                                     , x' <- combinations' (n-1) . drop i $ xs]
 
+-- Algorithm :
+-- 1. Generate all the combinations using the first elements of the list of integer (using question 26)
+-- 2. For each combination:
+--    a. remove this possibility of the list
+--    b. call the function recursively.
+--    c. the combination we "blocked" must be add to the list of result (first difficulty)
+-- 3. We must combine the result of all combination (second difficulty)
+groupSubsets :: (Show a, Eq a) => [Int] -> [a] -> [[[a]]]
+groupSubsets _ [] = [[[]]]
+groupSubsets [_] xs = [[xs]]
+groupSubsets ns xs = concatMap groupSubsets' root -- Step 3
+  where
+    root = combinations' (head ns) xs -- Step 1.
+    groupSubsets' x = map (x:) others -- Step 2.c
+      where others = groupSubsets (tail ns) (xs \\ x) -- Step 2.a and 2.b
